@@ -8,40 +8,66 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="@string/firstname"
         android:ems="10"
-        android:id="@+id/editText"
-        android:layout_marginTop="100dp" />
+        android:id="@+id/firstname"
+        android:layout_marginTop="100dp"
+        android:textColor="#C3C1BF" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="@string/lastname"
         android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_gravity="center_horizontal" />
+        android:id="@+id/lastname"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textColor="#C3C1BF" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editText3"
-        android:layout_gravity="center_horizontal" />
+        android:text="@string/email"
+        android:id="@+id/email"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textColor="#C3C1BF" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hint10"
+        android:id="@+id/hint1"
+        android:textColor="#C3C1BF" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText4"
-        android:layout_gravity="center_horizontal" />
+        android:id="@+id/passwod"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+        android:textColor="#C3C1BF" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/hint11"
+        android:id="@+id/textView"
+        android:textColor="#C3C1BF" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:id="@+id/submit"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="#504C49"
+        android:textColor="#fff" />
 </LinearLayout>

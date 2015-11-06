@@ -6,4 +6,10 @@
     <string name="title_activity_auth"></string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_register">Register</string>
+    <string name="firstname">First Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="email">example@domain.com</string>
+    <string name="submit">SUBMIT</string>
+    <string name="hint10">This will be your email adress</string>
+    <string name="hint11">Please enter a password between 8 and 25 characters containing Uppercase and Lowercase characters and numbers</string>
 </resources>
