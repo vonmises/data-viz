@@ -32,6 +32,10 @@
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".DataSetActivity"
+            android:label="@string/title_activity_data_set" >
+        </activity>
     </application>
 
 </manifest>
