@@ -12,4 +12,5 @@
     <string name="submit">SUBMIT</string>
     <string name="hint10">This will be your email adress</string>
     <string name="hint11">Please enter a password between 8 and 25 characters containing Uppercase and Lowercase characters and numbers</string>
+    <string name="title_activity_data_set">Data Sets</string>
 </resources>
