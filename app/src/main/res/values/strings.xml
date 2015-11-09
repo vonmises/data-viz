@@ -13,4 +13,24 @@
     <string name="hint10">This will be your email adress</string>
     <string name="hint11">Please enter a password between 8 and 25 characters containing Uppercase and Lowercase characters and numbers</string>
     <string name="title_activity_data_set">Data Sets</string>
+    
+    <string name="disaster_thunderstorm">Thunderstorm</string>
+    <string name="disaster_flood">Flood</string>
+    <string name="disaster_landslide">Landslide</string>
+    
+    <string name="education_teachers_assigned">
+        Number of Teachers assigned to Early Childhood Development Education
+    </string>
+    <string name="education_pupil_teacher_ratio">
+        Comparison of Pupil to Teacher Ratios (Early Childhood Development Education)
+    </string>
+    <string name="education_school_attendance">
+        School Attendance Data, Nairobi
+    </string>
+
+    <string name="tourism_museums">Major Museums</string>
+    <string name="tourism_sites">Historical Sites</string>
+    <string name="tourism_parks">National Parks</string>
+
+
 </resources>
