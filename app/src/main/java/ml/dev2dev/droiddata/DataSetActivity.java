@@ -106,9 +106,9 @@ public class DataSetActivity extends AppCompatActivity {
         adapter.addFrag(new DisasterFragment(
                 getResources().getColor(R.color.accent_material_light)), "Disasters");
         adapter.addFrag(new EducationFragment(
-                getResources().getColor(R.color.ripple_material_light)), "Education");
-        adapter.addFrag(new DisasterFragment(
-                getResources().getColor(R.color.button_material_dark)), "Tourism");
+                getResources().getColor(R.color.accent_material_light)), "Education");
+        adapter.addFrag(new TourismFragment(
+                getResources().getColor(R.color.accent_material_light)), "Tourism");
         viewPager.setAdapter(adapter);
     }
 
