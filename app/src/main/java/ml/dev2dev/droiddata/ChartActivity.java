@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -31,6 +32,10 @@ public class ChartActivity extends AppCompatActivity {
         Intent intent = getIntent();
         event = Disaster.valueOf(intent.getStringExtra(DataSetActivity.DISASTER));
 
+        String event_name = event.name();
+        setTitle(event_name.substring(0, 1).toUpperCase() +
+                 event_name.substring(1).toLowerCase() + " Disasters");
+
         setUpChart();
     }
 
@@ -40,8 +45,7 @@ public class ChartActivity extends AppCompatActivity {
         List<String> labels = getHeaders(data.get(0).split(","));
         //bar set
         BarDataSet bar_set = new BarDataSet(
-                getEntries(data.get(event.getEventNumber()).split(",")),
-                "Disasters due to " + event.name());
+                getEntries(data.get(event.getEventNumber()).split(",")),"");
         bar_set.setColors(new int[]{
                 Color.parseColor("red"),
                 Color.parseColor("green"),
@@ -66,6 +70,9 @@ public class ChartActivity extends AppCompatActivity {
 
         XAxis x_axis = bar_chart.getXAxis();
         x_axis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        bar_chart.getAxisLeft().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART); //left
+        bar_chart.getAxisRight().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART); //right
 
         setContentView(bar_chart);
     }
