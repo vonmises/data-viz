@@ -34,12 +34,16 @@
         </activity>
         <activity
             android:name=".DataSetActivity"
-            android:label="@string/title_activity_data_set" >
+            android:label="@string/title_activity_data_set"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyTheme.Detail" >
         </activity>
         <activity
-            android:name=".ChartActivity"
+            android:name=".DisasterActivity"
             android:label="@string/title_activity_chart"
-            android:parentActivityName=".DataSetActivity" >
+            android:screenOrientation="portrait"
+            android:parentActivityName=".DataSetActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="DataSetActivity" />
