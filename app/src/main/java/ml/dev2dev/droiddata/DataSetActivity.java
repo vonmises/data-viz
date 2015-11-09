@@ -92,19 +92,19 @@ public class DataSetActivity extends AppCompatActivity {
     }
 
     public void showThunderstormChart(View view){
-        Intent intent = new Intent(this, ChartActivity.class);
+        Intent intent = new Intent(this, DisasterActivity.class);
         intent.putExtra(DISASTER, Disaster.THUNDERSTORM.name());
         startActivity(intent);
     }
 
     public void showFloodChart(View view){
-        Intent intent = new Intent(this, ChartActivity.class);
+        Intent intent = new Intent(this, DisasterActivity.class);
         intent.putExtra(DISASTER, Disaster.FLOOD.name());
         startActivity(intent);
     }
 
     public void showLandslideChart(View view){
-        Intent intent = new Intent(this, ChartActivity.class);
+        Intent intent = new Intent(this, DisasterActivity.class);
         intent.putExtra(DISASTER, Disaster.LANDSLIDE.name());
         startActivity(intent);
     }
