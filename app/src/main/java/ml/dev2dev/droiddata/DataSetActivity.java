@@ -1,5 +1,6 @@
 package ml.dev2dev.droiddata;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,16 +15,13 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-/*import com.suleiman.material.adapter.SimpleRecyclerAdapter;
-import com.suleiman.material.model.VersionModel;*/
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataSetActivity extends AppCompatActivity {
+    public static final String DISASTER = "ml.dev2dev.droidapp.disaster";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +89,24 @@ public class DataSetActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showThunderstormChart(View view){
+        Intent intent = new Intent(this, ChartActivity.class);
+        intent.putExtra(DISASTER, Disaster.THUNDERSTORM.name());
+        startActivity(intent);
+    }
+
+    public void showFloodChart(View view){
+        Intent intent = new Intent(this, ChartActivity.class);
+        intent.putExtra(DISASTER, Disaster.FLOOD.name());
+        startActivity(intent);
+    }
+
+    public void showLandslideChart(View view){
+        Intent intent = new Intent(this, ChartActivity.class);
+        intent.putExtra(DISASTER, Disaster.LANDSLIDE.name());
+        startActivity(intent);
     }
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
