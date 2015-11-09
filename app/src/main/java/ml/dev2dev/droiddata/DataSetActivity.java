@@ -46,8 +46,6 @@ public class DataSetActivity extends AppCompatActivity {
                 (CollapsingToolbarLayout) findViewById(R.id.htab_collapse_toolbar);
         collapsingToolbarLayout.setTitleEnabled(false);
 
-        ImageView header = (ImageView) findViewById(R.id.htab_header);
-
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
                 R.drawable.header);
 
@@ -63,42 +61,6 @@ public class DataSetActivity extends AppCompatActivity {
             }
         });
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-                viewPager.setCurrentItem(tab.getPosition());
-
-                switch (tab.getPosition()) {
-                    case 0:
-                        showToast("One");
-                        break;
-                    case 1:
-                        showToast("Two");
-
-                        break;
-                    case 2:
-                        showToast("Three");
-
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-    }
-
-
-    void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     private void setupViewPager(ViewPager viewPager) {
