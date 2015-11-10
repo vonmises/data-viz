@@ -25,27 +25,94 @@ import java.util.List;
 
 public class DisasterActivity extends AppCompatActivity {
     private Disaster event;
+    InputStream input_stream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        event = Disaster.valueOf(intent.getStringExtra(DataSetActivity.DISASTER));
+        event = intent.getStringExtra(DataSetActivity.DISASTER) == null ? null
+                : Disaster.valueOf(intent.getStringExtra(DataSetActivity.DISASTER));
 
-        String event_name = event.name();
-        setTitle(event_name.substring(0, 1).toUpperCase() +
-                 event_name.substring(1).toLowerCase() + " Disasters");
+        if (event == null){
+            input_stream = getResources().openRawResource(R.raw.kenya_gender_inequality_index_per_county);
 
-        setUpChart();
+            setUpGenderChart();
+        }
+        else {
+            String event_name = event.name();
+            setTitle(event_name.substring(0, 1).toUpperCase() +
+                     event_name.substring(1).toLowerCase() + " Disasters");
+
+            input_stream = getResources().openRawResource(R.raw.natural_disaster_event_summary);
+
+            setUpChart();
+        }
+    }
+
+    private void setUpGenderChart() {
+        List<String> data = getData(input_stream);
+        List<String> labels = getGenderLabels(data);
+        //bar set
+        BarDataSet bar_set = new BarDataSet(getGenderEntries(data),"");
+        bar_set.setColors(new int[]{
+                Color.parseColor("red"),
+                Color.parseColor("green"),
+                Color.parseColor("blue"),
+                Color.parseColor("cyan")
+        });
+        bar_set.setBarSpacePercent(50f);
+
+        BarData bar_data = new BarData(labels, bar_set);
+
+        //bar chart
+        BarChart bar_chart = new BarChart(this);
+        bar_chart.setData(bar_data);
+        bar_chart.setDescription("");
+        bar_chart.animateXY(1000, 2000);
+
+        Legend legend = bar_chart.getLegend();
+        legend.setCustom(new int[]{
+                        Color.parseColor("#00ffffff")}, //transparent
+                        new String[]{"Gender Inequality Index"});
+        legend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+
+        XAxis x_axis = bar_chart.getXAxis();
+        x_axis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        setTitle("Gender Inequality Index");
+        setContentView(bar_chart);
+
+    }
+
+    private List<String> getGenderLabels(List<String> values){
+        List<String> labels = new ArrayList<>();
+
+        for (int i = 1; i < values.size(); i++){
+            labels.add(values.get(i).split(",")[1]);
+        }
+
+        return labels;
+    }
+
+    private ArrayList<BarEntry> getGenderEntries(List<String> values){
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        float x;
+
+        for (int i = 1; i < values.size(); i++){
+            x = Float.parseFloat(values.get(i).split(",")[2]);
+            entries.add(new BarEntry(x, i - 1));
+        }
+
+        return entries;
     }
 
     public void setUpChart(){
-        InputStream input_stream = getResources().openRawResource(R.raw.natural_disaster_event_summary);
         List<String> data = getData(input_stream);
-        List<String> labels = getHeaders(data.get(0).split(","));
+        List<String> labels = getXLabels(data.get(0).split(","));
         //bar set
         BarDataSet bar_set = new BarDataSet(
-                getEntries(data.get(event.getEventNumber()).split(",")),"");
+                getYValues(data.get(event.getEventNumber()).split(",")),"");
         bar_set.setColors(new int[]{
                 Color.parseColor("red"),
                 Color.parseColor("green"),
@@ -101,17 +168,17 @@ public class DisasterActivity extends AppCompatActivity {
         return values;
     }
 
-    public List<String> getHeaders(String[] array){
-        List<String> headers = new ArrayList<>();
+    public List<String> getXLabels(String[] array){
+        List<String> labels = new ArrayList<>();
 
         for (int i = 1; i < array.length; i++){
-            headers.add(array[i]);
+            labels.add(array[i]);
         }
 
-        return headers;
+        return labels;
     }
 
-    public ArrayList<BarEntry> getEntries(String[] values){
+    public ArrayList<BarEntry> getYValues(String[] values){
         ArrayList<BarEntry> entries = new ArrayList<>();
 
         for (int i = 1; i < values.length; i++) {
