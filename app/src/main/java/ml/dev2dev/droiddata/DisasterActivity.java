@@ -25,7 +25,9 @@ import java.util.List;
 
 public class DisasterActivity extends AppCompatActivity {
     private Disaster event;
-    InputStream input_stream;
+    private InputStream input_stream;
+    private BarDataSet bar_set;
+    private BarChart bar_chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class DisasterActivity extends AppCompatActivity {
                 : Disaster.valueOf(intent.getStringExtra(DataSetActivity.DISASTER));
 
         if (event == null){
+            setTitle("Gender Inequality Index");
             input_stream = getResources().openRawResource(R.raw.kenya_gender_inequality_index_per_county);
 
             setUpGenderChart();
@@ -48,13 +51,46 @@ public class DisasterActivity extends AppCompatActivity {
 
             setUpChart();
         }
+        setContentView(bar_chart);
     }
 
     private void setUpGenderChart() {
         List<String> data = getData(input_stream);
         List<String> labels = getGenderLabels(data);
-        //bar set
-        BarDataSet bar_set = new BarDataSet(getGenderEntries(data),"");
+
+        createBarDataSet(data);
+
+        BarData bar_data = new BarData(labels, bar_set);
+        createBarChart(bar_data);
+
+        createLegend(new String[]{""});
+        setXAxes();
+    }
+
+    public void setUpChart(){
+        List<String> data = getData(input_stream);
+        List<String> labels = getXLabels(data.get(0).split(","));
+        createBarDataSet(data);
+
+        BarData bar_data = new BarData(labels, bar_set);
+        createBarChart(bar_data);
+
+        createLegend(new String[]{event.name()});
+        setXAxes();
+
+        bar_chart.getAxisLeft().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+        bar_chart.getAxisRight().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+    }
+
+    private void createBarDataSet(List<String> data){
+        if (event != null) {
+            bar_set = new BarDataSet(
+                    getYValues(data.get(event.getEventNumber()).split(",")), "");
+        }
+        else{
+            bar_set = new BarDataSet(
+                    getGenderEntries(data), "");
+        }
         bar_set.setColors(new int[]{
                 Color.parseColor("red"),
                 Color.parseColor("green"),
@@ -62,27 +98,25 @@ public class DisasterActivity extends AppCompatActivity {
                 Color.parseColor("cyan")
         });
         bar_set.setBarSpacePercent(50f);
+    }
 
-        BarData bar_data = new BarData(labels, bar_set);
-
-        //bar chart
-        BarChart bar_chart = new BarChart(this);
-        bar_chart.setData(bar_data);
+    private void createBarChart(BarData barData){
+        bar_chart = new BarChart(this);
+        bar_chart.setData(barData);
         bar_chart.setDescription("");
         bar_chart.animateXY(1000, 2000);
+    }
 
+    private void createLegend(String[] labels){
         Legend legend = bar_chart.getLegend();
-        legend.setCustom(new int[]{
-                        Color.parseColor("#00ffffff")}, //transparent
-                        new String[]{"Gender Inequality Index"});
+        legend.setCustom(new int[]{ /*transparent*/
+                Color.parseColor("#00000000")}, labels);
         legend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+    }
 
+    private void setXAxes(){
         XAxis x_axis = bar_chart.getXAxis();
         x_axis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        setTitle("Gender Inequality Index");
-        setContentView(bar_chart);
-
     }
 
     private List<String> getGenderLabels(List<String> values){
@@ -107,41 +141,14 @@ public class DisasterActivity extends AppCompatActivity {
         return entries;
     }
 
-    public void setUpChart(){
-        List<String> data = getData(input_stream);
-        List<String> labels = getXLabels(data.get(0).split(","));
-        //bar set
-        BarDataSet bar_set = new BarDataSet(
-                getYValues(data.get(event.getEventNumber()).split(",")),"");
-        bar_set.setColors(new int[]{
-                Color.parseColor("red"),
-                Color.parseColor("green"),
-                Color.parseColor("blue"),
-                Color.parseColor("cyan")
-        });
-        bar_set.setBarSpacePercent(50f);
+    public ArrayList<BarEntry> getYValues(String[] values){
+        ArrayList<BarEntry> entries = new ArrayList<>();
 
-        BarData bar_data = new BarData(labels, bar_set);
+        for (int i = 1; i < values.length; i++) {
+            entries.add(new BarEntry(Float.parseFloat(values[i]), i - 1));
+        }
 
-        //bar chart
-        BarChart bar_chart = new BarChart(this);
-        bar_chart.setData(bar_data);
-        bar_chart.setDescription("");
-        bar_chart.animateXY(1000, 2000);
-
-        Legend legend = bar_chart.getLegend();
-        legend.setCustom(new int[]{
-                        Color.parseColor("#00ffffff")}, //transparent
-                new String[]{event.name()});
-        legend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-
-        XAxis x_axis = bar_chart.getXAxis();
-        x_axis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        bar_chart.getAxisLeft().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART); //left
-        bar_chart.getAxisRight().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART); //right
-
-        setContentView(bar_chart);
+        return entries;
     }
 
     public List<String> getData(InputStream input_stream){
@@ -176,16 +183,6 @@ public class DisasterActivity extends AppCompatActivity {
         }
 
         return labels;
-    }
-
-    public ArrayList<BarEntry> getYValues(String[] values){
-        ArrayList<BarEntry> entries = new ArrayList<>();
-
-        for (int i = 1; i < values.length; i++) {
-            entries.add(new BarEntry(Float.parseFloat(values[i]), i - 1));
-        }
-
-        return entries;
     }
 
     @Override
