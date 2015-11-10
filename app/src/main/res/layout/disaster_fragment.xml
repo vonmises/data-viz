@@ -13,19 +13,18 @@
     <android.support.v7.widget.CardView
         android:layout_height="80dp"
         android:layout_width="match_parent"
-        android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginBottom="10dp"
         card_view:cardBackgroundColor="#fff"
         card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="5dp" >
+        card_view:cardElevation="5dp"
+        android:clickable="true"
+        android:onClick="showThunderstormChart" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:clickable="true"
-            android:onClick="showThunderstormChart"
             android:text="@string/disaster_thunderstorm" />
 
     </android.support.v7.widget.CardView>
@@ -33,19 +32,18 @@
     <android.support.v7.widget.CardView
         android:layout_height="80dp"
         android:layout_width="match_parent"
-        android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginBottom="10dp"
         card_view:cardBackgroundColor="#fff"
         card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="5dp" >
+        card_view:cardElevation="5dp"
+        android:clickable="true"
+        android:onClick="showFloodChart" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:clickable="true"
-            android:onClick="showFloodChart"
             android:text="@string/disaster_flood" />
 
     </android.support.v7.widget.CardView>
@@ -53,19 +51,18 @@
     <android.support.v7.widget.CardView
         android:layout_height="80dp"
         android:layout_width="match_parent"
-        android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginBottom="10dp"
         card_view:cardBackgroundColor="#fff"
         card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="5dp" >
+        card_view:cardElevation="5dp"
+        android:clickable="true"
+        android:onClick="showLandslideChart" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:clickable="true"
-            android:onClick="showLandslideChart"
             android:text="@string/disaster_landslide" />
 
     </android.support.v7.widget.CardView>
