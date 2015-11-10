@@ -69,5 +69,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:background="#504C49"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:onClick="goToMainApp"/>
 </LinearLayout>
