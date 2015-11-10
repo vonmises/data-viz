@@ -63,12 +63,10 @@ public class DataSetActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new DisasterFragment(
-                getResources().getColor(R.color.accent_material_light)), "Disasters");
-        adapter.addFrag(new EducationFragment(
-                getResources().getColor(R.color.accent_material_light)), "Education");
-        adapter.addFrag(new TourismFragment(
-                getResources().getColor(R.color.accent_material_light)), "Tourism");
+        adapter.addFrag(new DisasterFragment(), "Disasters");
+        adapter.addFrag(new GenderInequalityFragment(), "Gender");
+        //adapter.addFrag(new EducationFragment(), "Education");
+        adapter.addFrag(new TourismFragment(), "Tourism");
         viewPager.setAdapter(adapter);
     }
 
@@ -106,6 +104,11 @@ public class DataSetActivity extends AppCompatActivity {
     public void showLandslideChart(View view){
         Intent intent = new Intent(this, DisasterActivity.class);
         intent.putExtra(DISASTER, Disaster.LANDSLIDE.name());
+        startActivity(intent);
+    }
+
+    public void showInequalityChart(View view){
+        Intent intent = new Intent(this, DisasterActivity.class);
         startActivity(intent);
     }
 
