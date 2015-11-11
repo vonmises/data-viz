@@ -15,11 +15,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +35,6 @@ public class DisasterActivity extends AppCompatActivity {
         if (event == null){
             setTitle("Gender Inequality Index");
             input_stream = getResources().openRawResource(R.raw.kenya_gender_inequality_index_per_county);
-
-            setUpGenderChart();
         }
         else {
             String event_name = event.name();
@@ -48,48 +42,40 @@ public class DisasterActivity extends AppCompatActivity {
                      event_name.substring(1).toLowerCase() + " Disasters");
 
             input_stream = getResources().openRawResource(R.raw.natural_disaster_event_summary);
-
-            setUpChart();
         }
+        setUpChart();
         setContentView(bar_chart);
     }
 
-    private void setUpGenderChart() {
-        List<String> data = getData(input_stream);
-        List<String> labels = getGenderLabels(data);
-
-        createBarDataSet(data);
-
-        BarData bar_data = new BarData(labels, bar_set);
-        createBarChart(bar_data);
-
-        createLegend(new String[]{""});
-        setXAxes();
-    }
-
     public void setUpChart(){
-        List<String> data = getData(input_stream);
-        List<String> labels = getXLabels(data.get(0).split(","));
+        List<String> data = FileUtils.getCSVData(input_stream);
+        List<String> labels = event == null ? getGenderXLabels(data)
+                                            : getDisasterXLabels(data.get(0).split(","));
         createBarDataSet(data);
 
         BarData bar_data = new BarData(labels, bar_set);
         createBarChart(bar_data);
 
-        createLegend(new String[]{event.name()});
         setXAxes();
 
-        bar_chart.getAxisLeft().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
-        bar_chart.getAxisRight().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+        if (event == null){
+            createLegend(new String[]{getString(R.string.gender_inequality_title)});
+            bar_chart.getAxisLeft().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+            bar_chart.getAxisRight().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+        }
+        else {
+            createLegend(new String[]{event.name()});
+        }
     }
 
     private void createBarDataSet(List<String> data){
         if (event != null) {
             bar_set = new BarDataSet(
-                    getYValues(data.get(event.getEventNumber()).split(",")), "");
+                    getDisasterYValues(data.get(event.getEventNumber()).split(",")), "");
         }
         else{
             bar_set = new BarDataSet(
-                    getGenderEntries(data), "");
+                    getGenderYValues(data), "");
         }
         bar_set.setColors(new int[]{
                 Color.parseColor("red"),
@@ -119,7 +105,7 @@ public class DisasterActivity extends AppCompatActivity {
         x_axis.setPosition(XAxis.XAxisPosition.BOTTOM);
     }
 
-    private List<String> getGenderLabels(List<String> values){
+    private List<String> getGenderXLabels(List<String> values){
         List<String> labels = new ArrayList<>();
 
         for (int i = 1; i < values.size(); i++){
@@ -129,7 +115,7 @@ public class DisasterActivity extends AppCompatActivity {
         return labels;
     }
 
-    private ArrayList<BarEntry> getGenderEntries(List<String> values){
+    private ArrayList<BarEntry> getGenderYValues(List<String> values){
         ArrayList<BarEntry> entries = new ArrayList<>();
         float x;
 
@@ -141,41 +127,7 @@ public class DisasterActivity extends AppCompatActivity {
         return entries;
     }
 
-    public ArrayList<BarEntry> getYValues(String[] values){
-        ArrayList<BarEntry> entries = new ArrayList<>();
-
-        for (int i = 1; i < values.length; i++) {
-            entries.add(new BarEntry(Float.parseFloat(values[i]), i - 1));
-        }
-
-        return entries;
-    }
-
-    public List<String> getData(InputStream input_stream){
-        List<String> values = new ArrayList<>();
-
-        try {
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(input_stream));
-            String line;
-
-            while((line = bufferedReader.readLine()) != null) {
-                values.add(line);
-            }
-
-            bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        catch(IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return values;
-    }
-
-    public List<String> getXLabels(String[] array){
+    public List<String> getDisasterXLabels(String[] array){
         List<String> labels = new ArrayList<>();
 
         for (int i = 1; i < array.length; i++){
@@ -183,6 +135,16 @@ public class DisasterActivity extends AppCompatActivity {
         }
 
         return labels;
+    }
+
+    public ArrayList<BarEntry> getDisasterYValues(String[] values){
+        ArrayList<BarEntry> entries = new ArrayList<>();
+
+        for (int i = 1; i < values.length; i++) {
+            entries.add(new BarEntry(Float.parseFloat(values[i]), i - 1));
+        }
+
+        return entries;
     }
 
     @Override
