@@ -14,6 +14,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -60,11 +61,11 @@ public class DisasterActivity extends AppCompatActivity {
 
         if (event == null){
             createLegend(new String[]{getString(R.string.gender_inequality_title)});
-            bar_chart.getAxisLeft().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
-            bar_chart.getAxisRight().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
         }
         else {
             createLegend(new String[]{event.name()});
+            bar_chart.getAxisLeft().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+            bar_chart.getAxisRight().setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
         }
     }
 
@@ -77,12 +78,7 @@ public class DisasterActivity extends AppCompatActivity {
             bar_set = new BarDataSet(
                     getGenderYValues(data), "");
         }
-        bar_set.setColors(new int[]{
-                Color.parseColor("red"),
-                Color.parseColor("green"),
-                Color.parseColor("blue"),
-                Color.parseColor("cyan")
-        });
+        bar_set.setColors(ColorTemplate.JOYFUL_COLORS);
         bar_set.setBarSpacePercent(50f);
     }
 
